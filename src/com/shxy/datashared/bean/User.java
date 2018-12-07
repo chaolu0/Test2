@@ -4,7 +4,7 @@ import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Id;
 import org.nutz.dao.entity.annotation.Table;
 
-@Table
+@Table("user")
 public class User {
     @Id
     private Integer id;
@@ -12,6 +12,10 @@ public class User {
     private String username;
     @Column
     private String password;
+    @Column
+    private String photo_path;
+    @Column
+    private String SK;
 
     public Integer getId() {
         return id;
@@ -35,5 +39,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhoto_path() {
+        return photo_path;
+    }
+
+    public void setPhoto_path(String photo_path) {
+        this.photo_path = photo_path;
+    }
+
+    public String getSK() {
+        return SK;
+    }
+
+    public void setSK(String SK) {
+        this.SK = SK;
     }
 }

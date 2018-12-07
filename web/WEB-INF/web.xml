@@ -10,6 +10,10 @@
             <param-name>modules</param-name>
             <param-value>com.shxy.datashared.MainController</param-value>
         </init-param>
+        <init-param>
+            <param-name>exclusions</param-name>
+            <param-value>/img/*</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>nutz</filter-name>

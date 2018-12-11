@@ -4,7 +4,7 @@ import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Id;
 import org.nutz.dao.entity.annotation.Table;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Table("item")
 public class Item {
@@ -14,17 +14,25 @@ public class Item {
     @Column
     private Integer user_id;
     @Column
-    private String title;
-    @Column
     private String content;
     @Column
     private Integer up_count;
     @Column
     private Integer comment_count;
     @Column
-    private Date up_time;
+    private Timestamp up_time;
     @Column
     private Integer type;
+    @Column
+    private String images;
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
 
     public Integer getId() {
         return id;
@@ -42,13 +50,6 @@ public class Item {
         this.user_id = user_id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getContent() {
         return content;
@@ -74,11 +75,11 @@ public class Item {
         this.comment_count = comment_count;
     }
 
-    public Date getUp_time() {
+    public Timestamp getUp_time() {
         return up_time;
     }
 
-    public void setUp_time(Date up_time) {
+    public void setUp_time(Timestamp up_time) {
         this.up_time = up_time;
     }
 

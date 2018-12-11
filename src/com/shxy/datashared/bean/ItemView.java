@@ -16,8 +16,6 @@ public class ItemView {
     @Column
     private String photo_path;
     @Column
-    private String title;
-    @Column
     private String content;
     @Column
     private Integer up_count;
@@ -27,6 +25,16 @@ public class ItemView {
     private Date up_time;
     @Column
     private Integer type;
+    @Column
+    private String images;
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
 
     public Integer getId() {
         return id;
@@ -58,14 +66,6 @@ public class ItemView {
 
     public void setPhoto_path(String photo_path) {
         this.photo_path = photo_path;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getContent() {

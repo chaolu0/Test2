@@ -12,6 +12,7 @@ import java.util.Random;
 public class FileUtils {
     private static final String ROOT_PATH = "E:\\software\\intellij\\intellij workspace\\DataSharedPlatform\\web\\img";
     private static final String URL_BASE = "http://192.168.0.103:8080/img/";
+    private static final String IMAG_DIR = "img/";
     private static final Random r = new Random();
 
     public static File saveFile(TempFile tempFile) {
@@ -32,7 +33,7 @@ public class FileUtils {
     }
 
     public static String getUrl(File file) {
-        return URL_BASE + file.getName();
+        return IMAG_DIR + file.getName();
     }
 
     /**

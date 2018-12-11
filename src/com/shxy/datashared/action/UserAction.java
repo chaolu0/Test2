@@ -59,14 +59,15 @@ public class UserAction {
     public Object login(@Param("username") String username,
                         @Param("password") String password) {
         NutMap map = new NutMap();
-        int count = dao.count(User.class, Cnd.where("username", "=", username)
+        User u = dao.fetch(User.class, Cnd.where("username", "=", username)
                 .and("password", "=", password));
-        if (count != 0) {
+        if (u!= null) {
             String sk = SKUtils.generateRandomSK();
             System.out.println(dao.update(User.class, Chain.make("SK", sk), Cnd.where("username", "=", username)));
             map.put("state", 1);
             map.put("msg", "登录成功");
             map.put("SK", sk);
+            map.put("id",u.getId());
         } else {
             map.put("state", 0);
             map.put("msg", "帐号或密码错误");
@@ -76,7 +77,6 @@ public class UserAction {
 
     @At("upload_photo")
     @POST
-    @GET
     @Fail("http:500")
     @Ok("json")
     @AdaptBy(type = UploadAdaptor.class, args = {"${app.root}/WEB-INF/tmp"})

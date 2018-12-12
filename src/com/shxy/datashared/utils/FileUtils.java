@@ -10,7 +10,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 public class FileUtils {
-    private static final String ROOT_PATH = "E:\\software\\intellij\\intellij workspace\\DataSharedPlatform\\web\\img";
+//    private static final String ROOT_PATH = "E:\\software\\intellij\\intellij workspace\\DataSharedPlatform\\web\\img";
+    private static final String ROOT_PATH = "E:\\software\\intellij\\intellij workspace\\DataSharedPlatform\\out\\artifacts\\DataSharedPlatform_war_exploded\\img";
     private static final String URL_BASE = "http://192.168.0.103:8080/img/";
     private static final String IMAG_DIR = "img/";
     private static final Random r = new Random();

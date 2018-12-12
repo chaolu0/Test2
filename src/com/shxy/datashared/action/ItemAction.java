@@ -2,7 +2,9 @@ package com.shxy.datashared.action;
 
 import com.shxy.datashared.bean.Item;
 import com.shxy.datashared.bean.ItemView;
+import com.shxy.datashared.bean.Remark;
 import com.shxy.datashared.utils.FileUtils;
+import com.sun.org.apache.regexp.internal.RE;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.nutz.dao.pager.Pager;
@@ -27,6 +29,7 @@ public class ItemAction {
     @Inject
     Dao dao;
 
+    //获取所有帖子
     @At("fetch_items")
     @GET
     @Ok("json")
@@ -43,6 +46,7 @@ public class ItemAction {
         return map;
     }
 
+    //上传文字帖子
     @At("upload_item")
     @GET
     @POST
@@ -65,6 +69,7 @@ public class ItemAction {
         return map;
     }
 
+    //上传图片帖子
     @At("upload_item_type2")
     @GET
     @POST
@@ -103,5 +108,30 @@ public class ItemAction {
         map.put("msg", "上传成功");
         return map;
 
+    }
+
+    //点赞帖子
+    @At("item_up")
+    @POST
+    @Ok("json")
+    @Fail("http:500")
+    public Object upItem(@Param("uid") Integer uid, @Param("iid") Integer iid,
+                         @Param("up") Integer up) {
+        NutMap map = new NutMap();
+        Remark r = dao.fetch(Remark.class, Cnd.where("user_id", "=", uid).and("item_id", "=", iid));
+        if (r == null) {
+            map.put("state", 1);
+            map.put("msg", "成功");
+            Remark remark = new Remark(uid, iid, up);
+            dao.insert(remark);
+            Item item = dao.fetch(Item.class, Cnd.where("id", "=", iid));
+            item.setUp_count(item.getUp_count() + 1);
+            dao.update(item);
+        } else {
+            map.put("state", 0);
+            map.put("msg", "重复");
+            map.put("up", r.getUp());
+        }
+        return map;
     }
 }

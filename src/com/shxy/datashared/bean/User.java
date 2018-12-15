@@ -16,6 +16,8 @@ public class User {
     private String photo_path;
     @Column
     private String SK;
+    @Column
+    private String nickName;
 
     public Integer getId() {
         return id;

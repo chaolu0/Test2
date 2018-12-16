@@ -61,13 +61,13 @@ public class UserAction {
         NutMap map = new NutMap();
         User u = dao.fetch(User.class, Cnd.where("username", "=", username)
                 .and("password", "=", password));
-        if (u!= null) {
+        if (u != null) {
             String sk = SKUtils.generateRandomSK();
             System.out.println(dao.update(User.class, Chain.make("SK", sk), Cnd.where("username", "=", username)));
             map.put("state", 1);
             map.put("msg", "登录成功");
             map.put("SK", sk);
-            map.put("id",u.getId());
+            map.put("id", u.getId());
         } else {
             map.put("state", 0);
             map.put("msg", "帐号或密码错误");
@@ -80,10 +80,10 @@ public class UserAction {
     @Fail("http:500")
     @Ok("json")
     @AdaptBy(type = UploadAdaptor.class, args = {"${app.root}/WEB-INF/tmp"})
-    public Object upload_photo(@Param("username") String username, @Param("SK") String sk,
+    public Object upload_photo(@Param("uid") Integer id, @Param("SK") String sk,
                                @Param("photo") TempFile photo) {
         NutMap map = new NutMap();
-        User user = dao.fetch(User.class, Cnd.where("username", "=", username).and("SK", "=", sk));
+        User user = dao.fetch(User.class, Cnd.where("id", "=", id).and("SK", "=", sk));
         if (user == null) {
             map.put("state", "0");
             map.put("msg", "非法上传");
@@ -94,10 +94,37 @@ public class UserAction {
             map.put("state", "0");
             map.put("msg", "上传失败");
         }
-        user.setPhoto_path(FileUtils.getUrl(saveFile));
+        String path = FileUtils.getUrl(saveFile);
+        user.setPhoto_path(path);
         dao.update(user);
         map.put("state", 1);
         map.put("msg", "上传成功");
+        map.put("photo_path",path);
+        return map;
+    }
+    @At("modify_info")
+    @POST
+    @Fail("http:500")
+    @Ok("json")
+    public Object modifyProfile( @Param("name") String name,
+                                @Param("new_value") String newValue, @Param("uid") Integer id,
+                                @Param("SK") String sk) {
+        NutMap map = new NutMap();
+        User user = dao.fetch(User.class, Cnd.where("id", "=", id).and("SK", "=", sk));
+        if (user == null) {
+            map.put("state", "0");
+            map.put("msg", "非法上传");
+            return map;
+        }
+        if (name.equals("nickname")) {
+            user.setNickName(newValue);
+        }
+        if (name.equals("personal_sign")) {
+            user.setPersonal_sign(newValue);
+        }
+        dao.update(user);
+        map.put("state", 1);
+        map.put("msg", "修改成功");
         return map;
     }
 }

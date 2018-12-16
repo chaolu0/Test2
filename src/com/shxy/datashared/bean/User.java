@@ -18,6 +18,24 @@ public class User {
     private String SK;
     @Column
     private String nickName;
+    @Column("personal_sign")
+    private String personal_sign;
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getPersonal_sign() {
+        return personal_sign;
+    }
+
+    public void setPersonal_sign(String personal_sign) {
+        this.personal_sign = personal_sign;
+    }
 
     public Integer getId() {
         return id;

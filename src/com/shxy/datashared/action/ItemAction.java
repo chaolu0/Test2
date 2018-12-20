@@ -66,6 +66,7 @@ public class ItemAction {
         Object o = dao.insert(item);
         map.put("state", 1);
         map.put("msg", "上传成功");
+        map.put("bean", item);
         return map;
     }
 

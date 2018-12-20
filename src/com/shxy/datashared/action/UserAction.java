@@ -40,9 +40,14 @@ public class UserAction {
             User user = new User();
             user.setUsername(username);
             user.setPassword(password);
+            user.setPersonal_sign("");
+            user.setPhoto_path("");
+            user.setNickName("");
+            user.setSK("");
             dao.insert(user);
             map.put("state", 1);
             map.put("msg", "注册成功");
+
         } else {
             map.put("state", 0);
             map.put("msg", "注册失败，该用户名已存在");
@@ -66,8 +71,7 @@ public class UserAction {
             System.out.println(dao.update(User.class, Chain.make("SK", sk), Cnd.where("username", "=", username)));
             map.put("state", 1);
             map.put("msg", "登录成功");
-            map.put("SK", sk);
-            map.put("id", u.getId());
+            map.put("user", u);
         } else {
             map.put("state", 0);
             map.put("msg", "帐号或密码错误");
@@ -99,14 +103,15 @@ public class UserAction {
         dao.update(user);
         map.put("state", 1);
         map.put("msg", "上传成功");
-        map.put("photo_path",path);
+        map.put("photo_path", path);
         return map;
     }
+
     @At("modify_info")
     @POST
     @Fail("http:500")
     @Ok("json")
-    public Object modifyProfile( @Param("name") String name,
+    public Object modifyProfile(@Param("name") String name,
                                 @Param("new_value") String newValue, @Param("uid") Integer id,
                                 @Param("SK") String sk) {
         NutMap map = new NutMap();
